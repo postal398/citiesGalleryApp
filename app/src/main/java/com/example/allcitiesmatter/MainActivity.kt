@@ -16,6 +16,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -44,7 +45,8 @@ fun citiesGalleryApp() {
                 textCustom : String,
                 firstTextCustom : String,
                 secondTextCustom : String,
-                availability : Boolean,
+                availabilityPrev : Boolean,
+                availabilityNext: Boolean
                 ) {
 
 
@@ -55,7 +57,10 @@ fun citiesGalleryApp() {
 
                     Spacer(modifier = Modifier.size(100.dp))
 
-                    Image(painter = painterResource(id = IdCustom) , contentDescription = contDescCustom)
+                    Image(painter = painterResource(id = IdCustom), contentDescription = contDescCustom, //Custom params!
+                        modifier = Modifier.padding(20.dp).size(350.dp).border(BorderStroke(50.dp,Color.Red),                                                ),
+                        contentScale = ContentScale.FillHeight,
+                        )
 
                     Spacer(modifier = Modifier.size(50.dp))
 
@@ -75,7 +80,7 @@ fun citiesGalleryApp() {
                                 step = 0
                             }
                             else {step--}
-                             },  enabled = availability,) {
+                             },  enabled = availabilityPrev,) {
                             Text(text = "Назад")
                         }
 
@@ -86,7 +91,7 @@ fun citiesGalleryApp() {
                                 step = 0
                             }
                             else {step++}
-                             }) {
+                             }, enabled = availabilityNext) {
                             Text(text = "Вперёд")
                         }
 
@@ -103,7 +108,7 @@ fun citiesGalleryApp() {
             funreables(R.drawable.msk, "msk", "Moscow calling",
                 "Moscow is a capital of Russian Federation",
                 "It's big and beautiful city",
-                false
+                false, true
                 )
         }
 
@@ -114,7 +119,7 @@ fun citiesGalleryApp() {
                 textCustom = "Adjara Gudzhu",
                 firstTextCustom = "Baku is a capital of Azerbaijan",
                 secondTextCustom = "In Baku u can buy a SberHleb",
-                true
+                true, true
             )
         }
 
@@ -125,7 +130,8 @@ fun citiesGalleryApp() {
                 textCustom = "Velikoe voevodztvo",
                 firstTextCustom = "Lodz is subrb of Warsaw",
                 secondTextCustom = "It's a place where you governor is a war-chief",
-                true
+                true,
+            true
             )
         }
 
@@ -136,7 +142,8 @@ fun citiesGalleryApp() {
                 textCustom = "Rostov-gorod-rostov-don!",
                 firstTextCustom = "Rostov is a capital of the south RF",
                 secondTextCustom = "Home...whatever",
-                true
+                true,
+                false
             )
         }
 
