@@ -15,9 +15,12 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.allcitiesmatter.ui.theme.AllCitiesMatterTheme
@@ -50,55 +53,89 @@ fun citiesGalleryApp() {
                 ) {
 
 
-                Column(
+                Column( //Главная общая колонка, в которую входит вообще весь этот сраный экран
                     modifier = Modifier.fillMaxSize(),verticalArrangement = Arrangement.Top,
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
 
-                    Spacer(modifier = Modifier.size(100.dp))
 
+                  Box( //бокс для отступа картинки
+                      Modifier
+                          .heightIn(min = if (step == 2) 200.dp else 350.dp, max = 500.dp)
+                          .padding(30.dp)
+                          .border(1.dp, Color.Black)
+                  ){
                     Image(painter = painterResource(id = IdCustom), contentDescription = contDescCustom, //Custom params!
-                        modifier = Modifier.padding(20.dp).size(350.dp).border(BorderStroke(50.dp,Color.Red),                                                ),
-                        contentScale = ContentScale.FillHeight,
-                        )
+                        modifier = Modifier
+                            .padding(30.dp)
+                            .heightIn(min = if (step == 2) 200.dp else 350.dp, max = 800.dp)
+                            .widthIn(min = 300.dp, max = 800.dp),
+                        contentScale = ContentScale.FillHeight
+                        ) //Конец изображения
+                  } //Конец бокса
 
-                    Spacer(modifier = Modifier.size(50.dp))
+                    Spacer(modifier = Modifier.size(10.dp)) //Пустых 40 дп между картинкой и блоком с текстом
 
-                    Column(modifier = Modifier
-                        .border(
-                            BorderStroke(2.dp, Color(105, 205, 216)),
-                            shape = RoundedCornerShape(4.dp)
-                        )){
+
+
+                        //Тексты в рамке
+                    Box(modifier = Modifier
+                        .padding(16.dp) // отступы между рамкой и Column
+                        .heightIn(min = 100.dp, max = 200.dp)
+                        .widthIn(min = 250.dp, max = 500.dp),
+                        contentAlignment = Alignment.Center) { //Бокс для текстов под картинкой
+                        Surface(
+                            shape = RoundedCornerShape(8.dp), // закруглить углы рамки
+                            border = BorderStroke(1.dp, Color.Gray), // ширина и цвет границы рамки
+                            elevation = 8.dp, // тень наружу
+                            color = MaterialTheme.colors.background // цвет рамки
+                        ) {
+                    Column(modifier = Modifier.padding(20.dp), verticalArrangement = Arrangement.Center){
                     Text(text = firstTextCustom)
-                    Text(text = secondTextCustom)}
+                    Text(text = secondTextCustom, style = TextStyle(fontWeight = FontWeight.Bold))}}}
 
-                    Spacer(modifier = Modifier.size(30.dp))
 
-                    Row() {
-                        Button(onClick = { //Кнопка назад
-                            if (step == 0) {
-                                step = 0
+
+
+                    Spacer(modifier = Modifier.size(50.dp)) //30 пустых dp между текстами и кнопками
+
+
+
+                    Box(//Бокс для кнопок
+                        modifier = Modifier.fillMaxWidth(),
+                        contentAlignment = Alignment.BottomCenter
+                    ) {
+                        Row() {//Ряд с КНОПКАМИ
+                            Button(
+                                onClick = { //Кнопка назад
+                                    if (step == 0) {
+                                        step = 0
+                                    } else {
+                                        step--
+                                    }
+                                },
+                                enabled = availabilityPrev,
+                            ) {
+                                Text(text = "Назад")
                             }
-                            else {step--}
-                             },  enabled = availabilityPrev,) {
-                            Text(text = "Назад")
-                        }
 
-                        Spacer(modifier = Modifier.size(50.dp))
+                            Spacer(modifier = Modifier.width(50.dp))
 
-                        Button(onClick = { //Кнопка вперед
-                            if (step == 3) {
-                                step = 0
+                            Button(onClick = { //Кнопка вперед
+                                if (step == 3) {
+                                    step = 0
+                                } else {
+                                    step++
+                                }
+                            }, enabled = availabilityNext) {
+                                Text(text = "Вперёд")
                             }
-                            else {step++}
-                             }, enabled = availabilityNext) {
-                            Text(text = "Вперёд")
-                        }
 
 
-                    } //Конец ряда с кнопками
-                }//  Конец колонки
-            }
+                        } //Конец ряда с кнопками
+                    }//Конец Бокса с кнопками
+                  }//  Конец колонки
+            }//Конец funreables
 
 
 
@@ -129,7 +166,7 @@ fun citiesGalleryApp() {
                 contDescCustom = "lodz!!",
                 textCustom = "Velikoe voevodztvo",
                 firstTextCustom = "Lodz is subrb of Warsaw",
-                secondTextCustom = "It's a place where you governor is a war-chief",
+                secondTextCustom = "It's a place where your governor is a war-chief",
                 true,
             true
             )
